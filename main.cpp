@@ -58,6 +58,11 @@ int main() {
     0.0f, 0.5f, 0.0f,
     };
 
+    unsigned int VAO;
+    glGenVertexArrays(1, &VAO);
+
+    glBindVertexArray(VAO);
+
     // Id for Buffer used for Vertex Data
     unsigned int VBO;
     // Generates Buffer and ID
@@ -105,13 +110,14 @@ int main() {
     checkProgramStatus(shaderProgram);
 
     // Tells OpenGL to use our shaderProgram
-    glUseProgram(shaderProgram);
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+
+   
 
     // Rendering Loop
     while(!glfwWindowShouldClose(window)) {
@@ -125,6 +131,10 @@ int main() {
 
         // Clears the Screen with the Color Buffer
         glClear(GL_COLOR_BUFFER_BIT);
+
+         glUseProgram(shaderProgram);
+         glBindVertexArray(VAO);
+         glDrawArrays(GL_TRIANGLES, 0 , 3);
 
 
         // Swaps the 2D Buffer to Render to the Screen
